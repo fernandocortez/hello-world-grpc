@@ -1,0 +1,10 @@
+image:
+  file: .gitpod.Dockerfile
+vscode:
+  extensions:
+    - ms-azuretools.vscode-docker
+    - mikestead.dotenv
+    - EditorConfig.EditorConfig
+    - dbaeumer.vscode-eslint
+    - eamodio.gitlens
+    - esbenp.prettier-vscode
