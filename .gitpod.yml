@@ -3,8 +3,39 @@ image:
 vscode:
   extensions:
     - ms-azuretools.vscode-docker
-    - mikestead.dotenv
     - EditorConfig.EditorConfig
     - dbaeumer.vscode-eslint
     - eamodio.gitlens
     - esbenp.prettier-vscode
+    - redhat.vscode-yaml
+
+ports:
+  - name: UI
+    port: 5173
+    onOpen: open-browser
+  - name: gRPC Server
+    port: 50051
+    onOpen: ignore
+    visibility: private
+  - name: tRPC Server
+    port: 5000
+    onOpen: ignore
+    visibility: private
+  - name: Envoy Proxy (Admin Panel)
+    port: 9901
+    onOpen: ignore
+    visibility: private
+  - name: Envoy Proxy to gRPC server
+    port: 8080
+    onOpen: ignore
+    visibility: private
+
+tasks:
+  - name: Dev Server
+    init: npm install
+    command: npm run dev
+  - name: Envoy Proxy
+    init: mkdir .temp
+    command: envoy -c envoy.yaml -l trace --log-path .temp/envoy_info.log
+  - name: Setup protoc
+    command: bash ./scripts/setup_linux.sh
