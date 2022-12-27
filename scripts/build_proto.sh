@@ -7,3 +7,4 @@ npx pbts -o src/protobuf/compiled_pb.d.ts src/protobuf/compiled_pb.js
 
 
 protoc -I=./protofiles hello_world.proto --js_out=import_style=commonjs:./src/protobuf --grpc-web_out=import_style=typescript,mode=grpcwebtext:./src/protobuf
+protoc -I=./protofiles echo_data.proto --js_out=import_style=commonjs:./src/protobuf --grpc-web_out=import_style=typescript,mode=grpcwebtext:./src/protobuf

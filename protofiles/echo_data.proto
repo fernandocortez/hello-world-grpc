@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package echodata;
+
+service EchoData {
+  rpc EchoDataUnary (EchoDataRequest) returns (EchoDataReply) {}
+  rpc EchoDataServerStream (EchoDataRequest) returns (stream User) {}
+}
+
+message User {
+  string _id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string email = 4;
+  uint32 age = 5;
+}
+
+message EchoDataRequest {
+  repeated User users = 1;
+}
+
+message EchoDataReply {
+  repeated User users = 1;
+}

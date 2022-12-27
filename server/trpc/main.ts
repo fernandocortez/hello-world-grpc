@@ -1,8 +1,9 @@
 import { createHTTPHandler } from "@trpc/server/adapters/standalone";
+import { echoDataRouter } from "./routers/echoData";
 import { greetingRouter } from "./routers/helloWorld";
 import { mergeRourters } from "./trpc";
 
-const appRouter = mergeRourters(greetingRouter);
+const appRouter = mergeRourters(echoDataRouter, greetingRouter);
 
 export type AppRouter = typeof appRouter;
 

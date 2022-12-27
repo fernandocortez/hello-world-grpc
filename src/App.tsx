@@ -1,8 +1,8 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { httpBatchLink } from "@trpc/client";
 import React, { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
 import { trpc } from "./utils/trpc";
-import { HelloWorld } from "./HelloWorld";
 import "./App.css";
 
 function App() {
@@ -20,8 +20,18 @@ function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/hello-world">Hello World</Link>
+            </li>
+            <li>
+              <Link to="/echo-data">Echo Data</Link>
+            </li>
+          </ul>
+        </nav>
         <main>
-          <HelloWorld />
+          <Outlet />
         </main>
       </QueryClientProvider>
     </trpc.Provider>

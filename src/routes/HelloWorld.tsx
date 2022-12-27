@@ -1,9 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
-import * as helloworld from "./protobuf/hello_world_pb";
-import { GreeterClient } from "./protobuf/Hello_worldServiceClientPb";
-import { trpc } from "./utils/trpc";
-import "./App.css";
+import * as helloworld from "../protobuf/hello_world_pb";
+import { GreeterClient } from "../protobuf/Hello_worldServiceClientPb";
+import { trpc } from "../utils/trpc";
 
 export const HelloWorld = () => {
   const [name, setName] = useState<string>("World");
