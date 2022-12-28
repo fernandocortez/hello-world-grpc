@@ -49,31 +49,31 @@ export const echodata = $root.echodata = (() => {
         };
 
         /**
-         * Callback as used by {@link echodata.EchoData#echoDataUnary}.
+         * Callback as used by {@link echodata.EchoData#unary}.
          * @memberof echodata.EchoData
-         * @typedef EchoDataUnaryCallback
+         * @typedef UnaryCallback
          * @type {function}
          * @param {Error|null} error Error, if any
          * @param {echodata.EchoDataReply} [response] EchoDataReply
          */
 
         /**
-         * Calls EchoDataUnary.
-         * @function echoDataUnary
+         * Calls Unary.
+         * @function unary
          * @memberof echodata.EchoData
          * @instance
          * @param {echodata.IEchoDataRequest} request EchoDataRequest message or plain object
-         * @param {echodata.EchoData.EchoDataUnaryCallback} callback Node-style callback called with the error, if any, and EchoDataReply
+         * @param {echodata.EchoData.UnaryCallback} callback Node-style callback called with the error, if any, and EchoDataReply
          * @returns {undefined}
          * @variation 1
          */
-        Object.defineProperty(EchoData.prototype.echoDataUnary = function echoDataUnary(request, callback) {
-            return this.rpcCall(echoDataUnary, $root.echodata.EchoDataRequest, $root.echodata.EchoDataReply, request, callback);
-        }, "name", { value: "EchoDataUnary" });
+        Object.defineProperty(EchoData.prototype.unary = function unary(request, callback) {
+            return this.rpcCall(unary, $root.echodata.EchoDataRequest, $root.echodata.EchoDataReply, request, callback);
+        }, "name", { value: "Unary" });
 
         /**
-         * Calls EchoDataUnary.
-         * @function echoDataUnary
+         * Calls Unary.
+         * @function unary
          * @memberof echodata.EchoData
          * @instance
          * @param {echodata.IEchoDataRequest} request EchoDataRequest message or plain object
@@ -82,35 +82,101 @@ export const echodata = $root.echodata = (() => {
          */
 
         /**
-         * Callback as used by {@link echodata.EchoData#echoDataServerStream}.
+         * Callback as used by {@link echodata.EchoData#serverStream}.
          * @memberof echodata.EchoData
-         * @typedef EchoDataServerStreamCallback
+         * @typedef ServerStreamCallback
          * @type {function}
          * @param {Error|null} error Error, if any
-         * @param {echodata.User} [response] User
+         * @param {echodata.EchoDataReply} [response] EchoDataReply
          */
 
         /**
-         * Calls EchoDataServerStream.
-         * @function echoDataServerStream
+         * Calls ServerStream.
+         * @function serverStream
          * @memberof echodata.EchoData
          * @instance
          * @param {echodata.IEchoDataRequest} request EchoDataRequest message or plain object
-         * @param {echodata.EchoData.EchoDataServerStreamCallback} callback Node-style callback called with the error, if any, and User
+         * @param {echodata.EchoData.ServerStreamCallback} callback Node-style callback called with the error, if any, and EchoDataReply
          * @returns {undefined}
          * @variation 1
          */
-        Object.defineProperty(EchoData.prototype.echoDataServerStream = function echoDataServerStream(request, callback) {
-            return this.rpcCall(echoDataServerStream, $root.echodata.EchoDataRequest, $root.echodata.User, request, callback);
-        }, "name", { value: "EchoDataServerStream" });
+        Object.defineProperty(EchoData.prototype.serverStream = function serverStream(request, callback) {
+            return this.rpcCall(serverStream, $root.echodata.EchoDataRequest, $root.echodata.EchoDataReply, request, callback);
+        }, "name", { value: "ServerStream" });
 
         /**
-         * Calls EchoDataServerStream.
-         * @function echoDataServerStream
+         * Calls ServerStream.
+         * @function serverStream
          * @memberof echodata.EchoData
          * @instance
          * @param {echodata.IEchoDataRequest} request EchoDataRequest message or plain object
-         * @returns {Promise<echodata.User>} Promise
+         * @returns {Promise<echodata.EchoDataReply>} Promise
+         * @variation 2
+         */
+
+        /**
+         * Callback as used by {@link echodata.EchoData#clientStream}.
+         * @memberof echodata.EchoData
+         * @typedef ClientStreamCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {echodata.EchoDataReply} [response] EchoDataReply
+         */
+
+        /**
+         * Calls ClientStream.
+         * @function clientStream
+         * @memberof echodata.EchoData
+         * @instance
+         * @param {echodata.IEchoDataRequest} request EchoDataRequest message or plain object
+         * @param {echodata.EchoData.ClientStreamCallback} callback Node-style callback called with the error, if any, and EchoDataReply
+         * @returns {undefined}
+         * @variation 1
+         */
+        Object.defineProperty(EchoData.prototype.clientStream = function clientStream(request, callback) {
+            return this.rpcCall(clientStream, $root.echodata.EchoDataRequest, $root.echodata.EchoDataReply, request, callback);
+        }, "name", { value: "ClientStream" });
+
+        /**
+         * Calls ClientStream.
+         * @function clientStream
+         * @memberof echodata.EchoData
+         * @instance
+         * @param {echodata.IEchoDataRequest} request EchoDataRequest message or plain object
+         * @returns {Promise<echodata.EchoDataReply>} Promise
+         * @variation 2
+         */
+
+        /**
+         * Callback as used by {@link echodata.EchoData#bidi}.
+         * @memberof echodata.EchoData
+         * @typedef BidiCallback
+         * @type {function}
+         * @param {Error|null} error Error, if any
+         * @param {echodata.EchoDataReply} [response] EchoDataReply
+         */
+
+        /**
+         * Calls Bidi.
+         * @function bidi
+         * @memberof echodata.EchoData
+         * @instance
+         * @param {echodata.IEchoDataRequest} request EchoDataRequest message or plain object
+         * @param {echodata.EchoData.BidiCallback} callback Node-style callback called with the error, if any, and EchoDataReply
+         * @returns {undefined}
+         * @variation 1
+         */
+        Object.defineProperty(EchoData.prototype.bidi = function bidi(request, callback) {
+            return this.rpcCall(bidi, $root.echodata.EchoDataRequest, $root.echodata.EchoDataReply, request, callback);
+        }, "name", { value: "Bidi" });
+
+        /**
+         * Calls Bidi.
+         * @function bidi
+         * @memberof echodata.EchoData
+         * @instance
+         * @param {echodata.IEchoDataRequest} request EchoDataRequest message or plain object
+         * @returns {Promise<echodata.EchoDataReply>} Promise
          * @variation 2
          */
 
@@ -123,7 +189,7 @@ export const echodata = $root.echodata = (() => {
          * Properties of a User.
          * @memberof echodata
          * @interface IUser
-         * @property {string|null} [_id] User _id
+         * @property {string|null} [id] User id
          * @property {string|null} [firstName] User firstName
          * @property {string|null} [lastName] User lastName
          * @property {string|null} [email] User email
@@ -146,12 +212,12 @@ export const echodata = $root.echodata = (() => {
         }
 
         /**
-         * User _id.
-         * @member {string} _id
+         * User id.
+         * @member {string} id
          * @memberof echodata.User
          * @instance
          */
-        User.prototype._id = "";
+        User.prototype.id = "";
 
         /**
          * User firstName.
@@ -209,8 +275,8 @@ export const echodata = $root.echodata = (() => {
         User.encode = function encode(message, writer) {
             if (!writer)
                 writer = $Writer.create();
-            if (message._id != null && Object.hasOwnProperty.call(message, "_id"))
-                writer.uint32(/* id 1, wireType 2 =*/10).string(message._id);
+            if (message.id != null && Object.hasOwnProperty.call(message, "id"))
+                writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
             if (message.firstName != null && Object.hasOwnProperty.call(message, "firstName"))
                 writer.uint32(/* id 2, wireType 2 =*/18).string(message.firstName);
             if (message.lastName != null && Object.hasOwnProperty.call(message, "lastName"))
@@ -254,7 +320,7 @@ export const echodata = $root.echodata = (() => {
                 let tag = reader.uint32();
                 switch (tag >>> 3) {
                 case 1: {
-                        message._id = reader.string();
+                        message.id = reader.string();
                         break;
                     }
                 case 2: {
@@ -308,9 +374,9 @@ export const echodata = $root.echodata = (() => {
         User.verify = function verify(message) {
             if (typeof message !== "object" || message === null)
                 return "object expected";
-            if (message._id != null && message.hasOwnProperty("_id"))
-                if (!$util.isString(message._id))
-                    return "_id: string expected";
+            if (message.id != null && message.hasOwnProperty("id"))
+                if (!$util.isString(message.id))
+                    return "id: string expected";
             if (message.firstName != null && message.hasOwnProperty("firstName"))
                 if (!$util.isString(message.firstName))
                     return "firstName: string expected";
@@ -338,8 +404,8 @@ export const echodata = $root.echodata = (() => {
             if (object instanceof $root.echodata.User)
                 return object;
             let message = new $root.echodata.User();
-            if (object._id != null)
-                message._id = String(object._id);
+            if (object.id != null)
+                message.id = String(object.id);
             if (object.firstName != null)
                 message.firstName = String(object.firstName);
             if (object.lastName != null)
@@ -365,14 +431,14 @@ export const echodata = $root.echodata = (() => {
                 options = {};
             let object = {};
             if (options.defaults) {
-                object._id = "";
+                object.id = "";
                 object.firstName = "";
                 object.lastName = "";
                 object.email = "";
                 object.age = 0;
             }
-            if (message._id != null && message.hasOwnProperty("_id"))
-                object._id = message._id;
+            if (message.id != null && message.hasOwnProperty("id"))
+                object.id = message.id;
             if (message.firstName != null && message.hasOwnProperty("firstName"))
                 object.firstName = message.firstName;
             if (message.lastName != null && message.hasOwnProperty("lastName"))

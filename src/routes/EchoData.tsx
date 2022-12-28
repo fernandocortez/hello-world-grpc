@@ -1,8 +1,10 @@
 import { faker } from "@faker-js/faker";
+import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
+import type { FinishedServerStreamingCall } from "@protobuf-ts/runtime-rpc";
 import { useMutation } from "@tanstack/react-query";
-import React, { useEffect, useMemo, useState } from "react";
-import * as echodata from "../protobuf/echo_data_pb";
-import { EchoDataClient } from "../protobuf/Echo_dataServiceClientPb";
+import React, { useEffect, useState } from "react";
+import * as echodata from "../protobuf/echo_data";
+import { EchoDataClient } from "../protobuf/echo_data.client";
 import { UserType as User } from "../../server/trpc/routers/echoData";
 import { trpc } from "../utils/trpc";
 
@@ -31,52 +33,36 @@ export const EchoData = () => {
     null
   );
   useEffect(() => {
-    setEchoDataClient(new EchoDataClient("http://localhost:8080"));
+    const transport = new GrpcWebFetchTransport({
+      baseUrl: "http://localhost:8080",
+    });
+    setEchoDataClient(new EchoDataClient(transport));
   }, []);
 
   const [users, setUsers] = useState<ReadonlyArray<User>>(
     createRandomUsers(count)
   );
-  const echoDataRequest: echodata.EchoDataRequest = useMemo(() => {
-    const protoUsers = users.map((user) => {
-      const protoUser = new echodata.User();
-      protoUser.setId(user._id);
-      protoUser.setFirstname(user.firstName);
-      protoUser.setLastname(user.lastName);
-      protoUser.setEmail(user.email);
-      protoUser.setAge(user.age);
-      return protoUser;
-    });
-    const request = new echodata.EchoDataRequest();
-    request.setUsersList(protoUsers);
-    return request;
-  }, [users]);
 
-  const echoDataUnaryQuery = useMutation<echodata.EchoDataReply.AsObject>({
-    mutationFn: (payload: echodata.EchoDataRequest) => {
-      return echoDataClient
-        ?.echoDataUnary(payload, null)
-        .then((reply) => reply.toObject());
+  const echoDataUnaryQuery = useMutation<echodata.EchoDataReply>({
+    mutationFn(payload: User[]) {
+      if (!echoDataClient) {
+        throw new Error("GreeterClient has not been initialized");
+      }
+      return echoDataClient.unary({ users: payload });
     },
   });
 
-  const echoDataServerStreamQuery = useMutation<echodata.User.AsObject[]>({
-    mutationFn: (payload: echodata.EchoDataRequest) => {
-      return new Promise((resolve, reject) => {
-        const temp: User[] = [];
-        const call = echoDataClient?.echoDataServerStream(payload);
-        call?.on("data", (user) => {
-          temp.push(user.toObject());
-        });
-        call?.on("error", (err) => {
-          reject(err.message);
-        });
-        call?.on("end", () => {
-          resolve(temp);
-        });
-      });
-    },
-  });
+  const echoDataServerStreamQuery = useMutation<echodata.EchoDataReply>(
+    async (payload: User[]) => {
+      if (!echoDataClient) {
+        throw new Error("GreeterClient has not been initialized");
+      }
+      const call = echoDataClient.serverStream({ users: payload });
+      for await (let response of call.responses) {
+        console.log("got response message: ", response);
+      }
+    }
+  );
 
   const trpcQuery = trpc.echoData.useMutation();
 
@@ -110,8 +96,8 @@ export const EchoData = () => {
         <button
           disabled={echoDataServerStreamQuery.isLoading || trpcQuery.isLoading}
           onClick={() => {
-            echoDataUnaryQuery.mutate(echoDataRequest);
-            echoDataServerStreamQuery.mutate(echoDataRequest);
+            echoDataUnaryQuery.mutate(users);
+            echoDataServerStreamQuery.mutate(users);
             trpcQuery.mutate({ users });
           }}
         >

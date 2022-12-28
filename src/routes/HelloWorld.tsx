@@ -1,7 +1,9 @@
+import { GrpcWebFetchTransport } from "@protobuf-ts/grpcweb-transport";
+import type { FinishedUnaryCall } from "@protobuf-ts/runtime-rpc";
 import { useMutation } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
-import * as helloworld from "../protobuf/hello_world_pb";
-import { GreeterClient } from "../protobuf/Hello_worldServiceClientPb";
+import { HelloReply, HelloRequest } from "../protobuf/hello_world";
+import { GreeterClient } from "../protobuf/hello_world.client";
 import { trpc } from "../utils/trpc";
 
 export const HelloWorld = () => {
@@ -9,17 +11,22 @@ export const HelloWorld = () => {
 
   const greeterClientRef = useRef<GreeterClient>(null);
   useEffect(() => {
-    greeterClientRef.current = new GreeterClient("http://localhost:8080");
+    const transport = new GrpcWebFetchTransport({
+      baseUrl: "http://localhost:8080",
+    });
+    greeterClientRef.current = new GreeterClient(transport);
   }, []);
 
-  const grpcQuery = useMutation<helloworld.HelloReply.AsObject>({
+  const grpcQuery = useMutation<HelloReply>({
     mutationFn(value: string) {
-      const helloRequest = new helloworld.HelloRequest();
-      helloRequest.setName(value);
+      if (!greeterClientRef.current) {
+        throw new Error("GreeterClient has not been initialized");
+      }
+
       return greeterClientRef.current
-        ?.sayHello(helloRequest, null)
-        .then((helloReply: helloworld.HelloReply) => {
-          return helloReply.toObject();
+        .sayHello({ name: value })
+        .then((call: FinishedUnaryCall<HelloRequest, HelloReply>) => {
+          return call.response;
         });
     },
   });

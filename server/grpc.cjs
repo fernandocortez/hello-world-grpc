@@ -1,6 +1,7 @@
 const path = require("path");
 const grpc = require("@grpc/grpc-js");
 const { loadSync } = require("@grpc/proto-loader");
+const chunk = require("lodash.chunk");
 
 const server = new grpc.Server();
 
@@ -56,15 +57,16 @@ function echoDataUnary(call, callback) {
 }
 
 function echoDataServerStream(call) {
-  call.request.users.forEach((user) => {
-    call.write(user);
+  const chunks = chunk(call.request.users, 100);
+  chunks.forEach((usersChunk) => {
+    call.write({ users: usersChunk });
   });
   call.end();
 }
 
 server.addService(echo_data_proto.EchoData.service, {
-  echoDataUnary,
-  echoDataServerStream,
+  unary: echoDataUnary,
+  serverStream: echoDataServerStream,
 });
 
 /**

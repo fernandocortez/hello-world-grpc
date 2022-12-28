@@ -3,12 +3,14 @@ syntax = "proto3";
 package echodata;
 
 service EchoData {
-  rpc EchoDataUnary (EchoDataRequest) returns (EchoDataReply) {}
-  rpc EchoDataServerStream (EchoDataRequest) returns (stream User) {}
+  rpc Unary (EchoDataRequest) returns (EchoDataReply) {}
+  rpc ServerStream (EchoDataRequest) returns (stream EchoDataReply) {}
+  rpc ClientStream (stream EchoDataRequest) returns (EchoDataReply) {}
+  rpc Bidi (stream EchoDataRequest) returns (stream EchoDataReply) {}
 }
 
 message User {
-  string _id = 1;
+  string id = 1;
   string firstName = 2;
   string lastName = 3;
   string email = 4;

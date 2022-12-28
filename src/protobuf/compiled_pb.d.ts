@@ -24,56 +24,98 @@ export namespace echodata {
         public static create(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean): EchoData;
 
         /**
-         * Calls EchoDataUnary.
+         * Calls Unary.
          * @param request EchoDataRequest message or plain object
          * @param callback Node-style callback called with the error, if any, and EchoDataReply
          */
-        public echoDataUnary(request: echodata.IEchoDataRequest, callback: echodata.EchoData.EchoDataUnaryCallback): void;
+        public unary(request: echodata.IEchoDataRequest, callback: echodata.EchoData.UnaryCallback): void;
 
         /**
-         * Calls EchoDataUnary.
+         * Calls Unary.
          * @param request EchoDataRequest message or plain object
          * @returns Promise
          */
-        public echoDataUnary(request: echodata.IEchoDataRequest): Promise<echodata.EchoDataReply>;
+        public unary(request: echodata.IEchoDataRequest): Promise<echodata.EchoDataReply>;
 
         /**
-         * Calls EchoDataServerStream.
+         * Calls ServerStream.
          * @param request EchoDataRequest message or plain object
-         * @param callback Node-style callback called with the error, if any, and User
+         * @param callback Node-style callback called with the error, if any, and EchoDataReply
          */
-        public echoDataServerStream(request: echodata.IEchoDataRequest, callback: echodata.EchoData.EchoDataServerStreamCallback): void;
+        public serverStream(request: echodata.IEchoDataRequest, callback: echodata.EchoData.ServerStreamCallback): void;
 
         /**
-         * Calls EchoDataServerStream.
+         * Calls ServerStream.
          * @param request EchoDataRequest message or plain object
          * @returns Promise
          */
-        public echoDataServerStream(request: echodata.IEchoDataRequest): Promise<echodata.User>;
+        public serverStream(request: echodata.IEchoDataRequest): Promise<echodata.EchoDataReply>;
+
+        /**
+         * Calls ClientStream.
+         * @param request EchoDataRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and EchoDataReply
+         */
+        public clientStream(request: echodata.IEchoDataRequest, callback: echodata.EchoData.ClientStreamCallback): void;
+
+        /**
+         * Calls ClientStream.
+         * @param request EchoDataRequest message or plain object
+         * @returns Promise
+         */
+        public clientStream(request: echodata.IEchoDataRequest): Promise<echodata.EchoDataReply>;
+
+        /**
+         * Calls Bidi.
+         * @param request EchoDataRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and EchoDataReply
+         */
+        public bidi(request: echodata.IEchoDataRequest, callback: echodata.EchoData.BidiCallback): void;
+
+        /**
+         * Calls Bidi.
+         * @param request EchoDataRequest message or plain object
+         * @returns Promise
+         */
+        public bidi(request: echodata.IEchoDataRequest): Promise<echodata.EchoDataReply>;
     }
 
     namespace EchoData {
 
         /**
-         * Callback as used by {@link echodata.EchoData#echoDataUnary}.
+         * Callback as used by {@link echodata.EchoData#unary}.
          * @param error Error, if any
          * @param [response] EchoDataReply
          */
-        type EchoDataUnaryCallback = (error: (Error|null), response?: echodata.EchoDataReply) => void;
+        type UnaryCallback = (error: (Error|null), response?: echodata.EchoDataReply) => void;
 
         /**
-         * Callback as used by {@link echodata.EchoData#echoDataServerStream}.
+         * Callback as used by {@link echodata.EchoData#serverStream}.
          * @param error Error, if any
-         * @param [response] User
+         * @param [response] EchoDataReply
          */
-        type EchoDataServerStreamCallback = (error: (Error|null), response?: echodata.User) => void;
+        type ServerStreamCallback = (error: (Error|null), response?: echodata.EchoDataReply) => void;
+
+        /**
+         * Callback as used by {@link echodata.EchoData#clientStream}.
+         * @param error Error, if any
+         * @param [response] EchoDataReply
+         */
+        type ClientStreamCallback = (error: (Error|null), response?: echodata.EchoDataReply) => void;
+
+        /**
+         * Callback as used by {@link echodata.EchoData#bidi}.
+         * @param error Error, if any
+         * @param [response] EchoDataReply
+         */
+        type BidiCallback = (error: (Error|null), response?: echodata.EchoDataReply) => void;
     }
 
     /** Properties of a User. */
     interface IUser {
 
-        /** User _id */
-        _id?: (string|null);
+        /** User id */
+        id?: (string|null);
 
         /** User firstName */
         firstName?: (string|null);
@@ -97,8 +139,8 @@ export namespace echodata {
          */
         constructor(properties?: echodata.IUser);
 
-        /** User _id. */
-        public _id: string;
+        /** User id. */
+        public id: string;
 
         /** User firstName. */
         public firstName: string;
